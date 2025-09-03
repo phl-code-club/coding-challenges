@@ -2,8 +2,18 @@ package main
 
 import (
 	"enchanted-codex/database"
+	"enchanted-codex/routes"
 	"enchanted-codex/services"
+	"log"
+	"net/http"
 )
+
+func LogMiddleware(mux *http.ServeMux) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s: %s", r.Method, r.URL.Path)
+		mux.ServeHTTP(w, r)
+	}
+}
 
 func main() {
 	db, err := database.GetDB()
@@ -13,4 +23,12 @@ func main() {
 	teamService, questionService, answerService := services.NewTeamServicxe(db), services.NewQuestionService(db), services.NewAnswerService(db)
 	// Throw these out to fix allow for compilation
 	_, _, _ = teamService, questionService, answerService
+	mux := new(http.ServeMux)
+	viewRouter := routes.NewViewRouter(mux)
+	viewRouter.Use()
+	log.Println("Server running on port 4000")
+	err = http.ListenAndServe(":4000", LogMiddleware(mux))
+	if err != nil {
+		panic(err)
+	}
 }

@@ -54,3 +54,26 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 /* End Style Reset */
+
+:root {
+  --primary-text: #333333;
+  --secondary-text: #4A306D;
+  --light: #EBDFFE;
+  --bg: #D4E5F6;
+  --accent: #1AC763;
+  background-color: var(--bg);
+  color: var(--primary-text);
+}
+
+.navbar {
+  width: 100%;
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--primary-text);
+}
+
+main {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: fit-content;
+}

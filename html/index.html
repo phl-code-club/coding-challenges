@@ -1,14 +1,14 @@
-{{ define "indexPage" }}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link href="style.css" rel="stylesheet">
-  </head>
-  <body>
-    Index Page 
-  </body>
-</html>
+{{ define "page" }}
+  <main>
+    <h1>Welcome to ✨ <em>The Enchanted Codex</em> ✨</h1>
+    <p>You will be paired with another person and given a list of problems that need solving! Each problem is split up into the following:</p>
+    <ul>
+      <li>Name</li>
+      <li>Intro</li>
+      <li>Part 1 with example</li>
+      <li>Part 2 with example</li>
+    </ul>
+    <p>Each question will give you an input. All you need to do is take that input and use it to derive an output. Sometimes these outputs are just numbers, sometimes they comma separated lists of items (or JSON style arrays, either or will work).</p>
+    <p>To start head over <a href="/create">here</a> to create your team. Once you have a team you can go <a href="/questions">here</a> to see a list of questions!</p>
+  </main>
 {{ end }}

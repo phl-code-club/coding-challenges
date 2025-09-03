@@ -1,14 +1,11 @@
-{{ define "createTeamPage" }}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link href="style.css" rel="stylesheet">
-  </head>
-  <body>
-    Index Page 
-  </body>
-</html>
+{{ define "page" }}
+<main>
+  <form method="post">
+    <label for="team-name">Team Name</label>
+    <input type="text" name="team-name" placeholder="Team Name">
+    <label for="team-members">Team Members</label>
+    <input type="text" name="team-members" placeholder="Team Members">
+    <button type="submit">Submit</button>
+  </form>
+</main>
 {{ end }}
