@@ -1,2 +1,16 @@
 {{ define "navbar" }}
+<nav class="navbar">
+  <button class="nav-item">
+    <a href="/">Home</a>
+  </button>
+  {{ if .Team }} 
+    <button class="nav-item">
+      <a href="/questions">Questions</a>
+    </button>
+  {{ else }}
+    <button class="nav-item">
+      <a href="/create">Create Team</a>
+    </button>
+  {{ end }}
+</nav>
 {{ end }}

@@ -3,11 +3,13 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"log"
 
 	_ "modernc.org/sqlite"
 )
 
 func createTables(db *sql.DB) error {
+	log.Println("Setting up tables...")
 	_, err := db.Exec(`
 	CREATE TABLE IF NOT EXISTS teams (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
