@@ -1,11 +1,15 @@
 {{ define "page" }}
 <main>
-  <form method="post">
-    <label for="team-name">Team Name</label>
-    <input type="text" name="team-name" placeholder="Team Name">
-    <label for="team-members">Team Members</label>
-    <input type="text" name="team-members" placeholder="Team Members">
-    <button type="submit">Submit</button>
+  <form class="team-form" method="post">
+    <div>
+      <label aria-hidden="" for="team-name">Team Name</label>
+      <input type="text" name="team-name" required placeholder="Fritzy's Fabled Fellowship">
+    </div>
+    <div>
+      <label aria-hidden for="team-members">Team Members</label>
+      <input type="text" name="team-members" required placeholder="Graham, Christina, Inessa">
+    </div>
+    <button class="submit-button" type="submit">Submit</button>
   </form>
 </main>
 {{ end }}

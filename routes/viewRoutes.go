@@ -21,6 +21,10 @@ type viewRouter struct {
 	mux *http.ServeMux
 }
 
+func (v viewRouter) parseTemplateWithLayout(path string) *template.Template {
+	return template.Must(template.ParseFiles("./html/layout.html", "./html/navbar.html", path))
+}
+
 func (v viewRouter) getTeamFromContext(ctx context.Context) (string, error) {
 	val := ctx.Value(teamName)
 	valStr, ok := val.(string)
@@ -48,14 +52,14 @@ func (v viewRouter) checkTeamCookie(handler http.HandlerFunc) http.HandlerFunc {
 
 func (v viewRouter) handleIndex() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("./html/layout.html", "./html/index.html", "./html/navbar.html"))
+		tmpl := v.parseTemplateWithLayout("./html/index.html")
 		tmpl.Execute(w, nil)
 	}
 }
 
 func (v viewRouter) handleCreate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("./html/layout.html", "./html/create-team.html", "./html/navbar.html"))
+		tmpl := v.parseTemplateWithLayout("./html/create-team.html")
 		tmpl.Execute(w, nil)
 	}
 }
@@ -63,7 +67,7 @@ func (v viewRouter) handleCreate() http.HandlerFunc {
 func (v viewRouter) handleQuestionList() http.HandlerFunc {
 	return v.checkTeamCookie(
 		func(w http.ResponseWriter, r *http.Request) {
-			tmpl := template.Must(template.ParseFiles("./html/layout.html", "./html/question-list.html", "./html/navbar.html"))
+			tmpl := v.parseTemplateWithLayout("./html/question-list.html")
 			tmpl.Execute(w, nil)
 		},
 	)
@@ -72,7 +76,7 @@ func (v viewRouter) handleQuestionList() http.HandlerFunc {
 func (v viewRouter) handleQuestion() http.HandlerFunc {
 	return v.checkTeamCookie(
 		func(w http.ResponseWriter, r *http.Request) {
-			tmpl := template.Must(template.ParseFiles("./html/layout.html", "./html/question.html", "./html/navbar.html"))
+			tmpl := v.parseTemplateWithLayout("./html/question.html")
 			tmpl.Execute(w, nil)
 		},
 	)
@@ -86,7 +90,7 @@ func (v viewRouter) Use() {
 	mux.HandleFunc("GET /", v.handleIndex())
 	mux.HandleFunc("GET /create/", v.handleCreate())
 	mux.HandleFunc("GET /questions/", v.handleQuestionList())
-	mux.HandleFunc("GET /questions/{slug}/", v.handleQuestion())
+	mux.HandleFunc("GET /questions/{id}/", v.handleQuestion())
 }
 
 func NewViewRouter(mux *http.ServeMux) ViewRouter {

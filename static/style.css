@@ -1,6 +1,8 @@
 /* Style Reset */
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -24,18 +26,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -43,37 +58,180 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
+
 /* End Style Reset */
 
+@font-face {
+  font-family: 'Amita';
+  src: url('fonts/Amita-Regular.woff2') format('woff2'),
+    url('fonts/Amita-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amita';
+  src: url('fonts/Amita-Bold.woff2') format('woff2'),
+    url('fonts/Amita-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Upright';
+  src: url('fonts/CormorantUpright-Bold.woff2') format('woff2'),
+    url('fonts/CormorantUpright-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Upright';
+  src: url('fonts/CormorantUpright-Medium.woff2') format('woff2'),
+    url('fonts/CormorantUpright-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Upright';
+  src: url('fonts/CormorantUpright-SemiBold.woff2') format('woff2'),
+    url('fonts/CormorantUpright-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Upright';
+  src: url('fonts/CormorantUpright-Regular.woff2') format('woff2'),
+    url('fonts/CormorantUpright-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Upright';
+  src: url('fonts/CormorantUpright-Light.woff2') format('woff2'),
+    url('fonts/CormorantUpright-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 :root {
-  --primary-text: #333333;
-  --secondary-text: #4A306D;
-  --light: #EBDFFE;
-  --bg: #D4E5F6;
+  --grey: #333333;
+  --bg: #4A306D;
+  --primary-text: #EBDFFE;
+  --secondary-text: #D4E5F6;
   --accent: #1AC763;
-  background-color: var(--bg);
+  font-family: "Cormorant Upright", serif;
+  font-weight: 600;
+  font-size: 20px;
   color: var(--primary-text);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-shadow: 0px 0px 3px var(--secondary-text);
+  font-family: "Amita", serif;
+  font-weight: bold;
+}
+
 .navbar {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  padding: 0.5rem;
-  border-bottom: 2px solid var(--primary-text);
+  padding: 1.25rem;
+  padding-bottom: 0;
+}
+
+.nav-item {
+  border: none;
+  background-color: var(--secondary-text);
+  color: var(--grey) !important;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  box-shadow: 2px 2px 5px var(--accent);
+}
+
+.nav-item>a {
+  text-decoration: none;
+}
+
+.nav-item>a:hover {
+  text-decoration: underline;
+}
+
+.nav-item>a:visited {
+  color: inherit;
 }
 
 main {
   padding: 1rem;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 1rem auto;
   width: fit-content;
+}
+
+body {
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--bg);
+}
+
+.team-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-form>div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+.team-form>div>input {
+  box-shadow: 1px 1px 5px var(--grey);
+}
+
+.submit-button {
+  border: none;
+  background-color: var(--accent);
+  color: var(--grey) !important;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  width: fit-content;
+  margin: 0 auto;
+  box-shadow: 1px 1px 5px var(--grey);
 }
