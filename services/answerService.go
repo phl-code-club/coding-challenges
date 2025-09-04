@@ -2,14 +2,22 @@ package services
 
 import (
 	"database/sql"
+	"errors"
 	"time"
+)
+
+type Part = int
+
+const (
+	Part1 Part = iota
+	Part2
 )
 
 type Answer struct {
 	ID         int
 	TeamID     int
 	QuestionID int
-	Value      string
+	Part       Part
 	CreatedAt  time.Time
 }
 
@@ -17,10 +25,11 @@ type CheckAnswer struct {
 	TeamID     int
 	QuestionID int
 	Value      string
+	Part       Part
 }
 
 type AnswerService interface {
-	CheckAnswer(input CheckAnswer) (Answer, error)
+	CheckAnswer(input CheckAnswer) (*Answer, error)
 }
 
 type answerService struct {
@@ -28,8 +37,30 @@ type answerService struct {
 }
 
 // CheckAnswer implements AnswerService.
-func (a answerService) CheckAnswer(input CheckAnswer) (Answer, error) {
-	panic("unimplemented")
+func (a answerService) CheckAnswer(input CheckAnswer) (*Answer, error) {
+	result := a.db.QueryRow("SELECT id, part_1_answer, part_2_answer FROM questions WHERE id = ?", input.QuestionID)
+	var question Question
+	err := result.Scan(&question.ID, &question.Part1Answer, &question.Part2Answer)
+	if err != nil {
+		return nil, err
+	}
+	switch input.Part {
+	case Part1:
+		if input.Value != question.Part1Answer {
+			return nil, errors.New("incorrect answer")
+		}
+	case Part2:
+		if input.Value != question.Part2Answer {
+			return nil, errors.New("incorrect answer")
+		}
+	}
+	answerResult := a.db.QueryRow("INSERT INTO answers (team_id, question_id, part) VALUES (?, ?, ?) RETURNING id, team_id, question_id, part, created_at", input.TeamID, input.QuestionID, input.Part)
+	var answer Answer
+	err = answerResult.Scan(&answer.ID, &answer.TeamID, &answer.QuestionID, &answer.Part, &answer.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+	return &answer, nil
 }
 
 func NewAnswerService(db *sql.DB) AnswerService {

@@ -22,6 +22,7 @@ func createTables(db *sql.DB) error {
 	CREATE TABLE IF NOT EXISTS questions (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT NOT NULL,
+		intro TEXT NOT NULL,
 		part_1_description TEXT NOT NULL,
 		part_1_answer TEXT NOT NULL,
 		part_2_description TEXT NOT NULL,
@@ -31,8 +32,10 @@ func createTables(db *sql.DB) error {
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		team_id INTEGER NOT NULL,
 		question_id INTEGER NOT NULL,
-		answer TEXT NOT NULL,
-		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+		part  NOT NULL,
+		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY(team_id) REFERENCES teams(id),
+		FOREIGN KEY(question_id) REFERENCES questions(id)
 	);
 	`)
 	if err != nil {
