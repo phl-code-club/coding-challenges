@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -62,6 +63,7 @@ func (a answerService) CheckAnswer(input AnswerData, value string) (*Answer, err
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(input.Part, value, question.Part1Answer, question.Part2Answer)
 	switch input.Part {
 	case Part1:
 		if value != question.Part1Answer {

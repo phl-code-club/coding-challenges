@@ -210,6 +210,7 @@ var ingredients = []string{
 
 func main() {
 	generateFile := flag.Bool("generate", false, "Generate inputs and answers to files instead of seeding database")
+	flag.BoolVar(generateFile, "g", false, "Generate inputs and answers to files instead of seeding database (shorthand)")
 	flag.Parse()
 
 	if *generateFile {
@@ -310,12 +311,90 @@ func generateToFiles() error {
 }
 
 func insertQuestions(tx *sql.Tx) error {
-	questions := []Question{
-		generateQuestion1(),
-		generateQuestion2(),
-		generateQuestion3(),
-		generateQuestion4(),
-		generateQuestion5(),
+	// Load questions from existing generated files
+	questions := []Question{}
+
+	for i := 1; i <= 5; i++ {
+		// Read input file
+		inputFile := fmt.Sprintf("generated/question%d_input.txt", i)
+		inputBytes, err := os.ReadFile(inputFile)
+		if err != nil {
+			return fmt.Errorf("failed to read input file %s: %v", inputFile, err)
+		}
+
+		// Read answers file
+		answersFile := fmt.Sprintf("generated/question%d_answers.txt", i)
+		answersBytes, err := os.ReadFile(answersFile)
+		if err != nil {
+			return fmt.Errorf("failed to read answers file %s: %v", answersFile, err)
+		}
+
+		// Parse answers
+		answersContent := string(answersBytes)
+		lines := strings.Split(strings.TrimSpace(answersContent), "\n")
+		if len(lines) < 2 {
+			return fmt.Errorf("invalid answers file format: %s", answersFile)
+		}
+
+		part1Answer := strings.TrimPrefix(lines[0], "Part 1: ")
+		part2Answer := strings.TrimPrefix(lines[1], "Part 2: ")
+
+		// Create question based on question number
+		var question Question
+		switch i {
+		case 1:
+			question = Question{
+				Name:             "Incantation Regulation",
+				Intro:            readEmbeddedFile("descriptions/question1_intro.txt"),
+				Input:            string(inputBytes),
+				Part1Description: readEmbeddedFile("descriptions/question1_part1.txt"),
+				Part1Answer:      part1Answer,
+				Part2Description: readEmbeddedFile("descriptions/question1_part2.txt"),
+				Part2Answer:      part2Answer,
+			}
+		case 2:
+			question = Question{
+				Name:             "Cryptarch's Conundrum",
+				Intro:            readEmbeddedFile("descriptions/question2_intro.txt"),
+				Input:            string(inputBytes),
+				Part1Description: readEmbeddedFile("descriptions/question2_part1.txt"),
+				Part1Answer:      part1Answer,
+				Part2Description: readEmbeddedFile("descriptions/question2_part2.txt"),
+				Part2Answer:      part2Answer,
+			}
+		case 3:
+			question = Question{
+				Name:             "Aunt Agnes' Apothecary",
+				Intro:            readEmbeddedFile("descriptions/question3_intro.txt"),
+				Input:            string(inputBytes),
+				Part1Description: readEmbeddedFile("descriptions/question3_part1.txt"),
+				Part1Answer:      part1Answer,
+				Part2Description: readEmbeddedFile("descriptions/question3_part2.txt"),
+				Part2Answer:      part2Answer,
+			}
+		case 4:
+			question = Question{
+				Name:             "Potion Commotion",
+				Intro:            readEmbeddedFile("descriptions/question4_intro.txt"),
+				Input:            string(inputBytes),
+				Part1Description: readEmbeddedFile("descriptions/question4_part1.txt"),
+				Part1Answer:      part1Answer,
+				Part2Description: readEmbeddedFile("descriptions/question4_part2.txt"),
+				Part2Answer:      part2Answer,
+			}
+		case 5:
+			question = Question{
+				Name:             "The Mad Mage's Maze",
+				Intro:            readEmbeddedFile("descriptions/question5_intro.txt"),
+				Input:            string(inputBytes),
+				Part1Description: readEmbeddedFile("descriptions/question5_part1.txt"),
+				Part1Answer:      part1Answer,
+				Part2Description: readEmbeddedFile("descriptions/question5_part2.txt"),
+				Part2Answer:      part2Answer,
+			}
+		}
+
+		questions = append(questions, question)
 	}
 
 	for _, q := range questions {
