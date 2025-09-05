@@ -1,5 +1,27 @@
 {{ define "page" }}
 <main>
-    Question Page 
+  <h1>
+    {{ .Question.Name }}
+  </h1>
+  {{ .Question.ParseMarkdown .Question.Intro}}
+  <br>
+  <h2>Part 1:</h2>
+  {{ .Question.ParseMarkdown .Question.Part1Desc }}
+  <br>
+  <h2>Part 2:</h2>
+  {{ if .Question.HasAnsweredPart1 }}
+  {{ .Question.ParseMarkdown .Question.Part2Desc }}
+  {{ end }}
+  {{ if .Question.HasAnsweredPart2 }}
+  <h2>Congratulations! 🎉</h2>
+  {{ else }}
+  <a href="/questions/{{.Question.ID}}/input" target="_blank">
+    <button>Get Input</button>
+  </a>
+  <form action="/questions/{{.Question.ID}}/part{{ if .Question.HasAnsweredPart1 }}2{{ else }}1{{ end }}" method="post">
+    <input type="text" name="answer">
+    <button class="submit-button" type="submit">Submit</button>
+  </form>
+  {{ end }}
 </main>
 {{ end }}

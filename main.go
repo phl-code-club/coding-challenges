@@ -21,11 +21,11 @@ func main() {
 		panic(err)
 	}
 	teamService, questionService, answerService := services.NewTeamServicxe(db), services.NewQuestionService(db), services.NewAnswerService(db)
-	// Throw these out to fix allow for compilation
-	_, _, _ = teamService, questionService, answerService
 	mux := new(http.ServeMux)
-	viewRouter := routes.NewViewRouter(mux)
+	viewRouter := routes.NewViewRouter(mux, teamService, questionService, answerService)
 	viewRouter.Use()
+	apiRouter := routes.NewAPIRoutes(mux, answerService, teamService)
+	apiRouter.Use()
 	log.Println("Server running on port 4000")
 	err = http.ListenAndServe(":4000", LogMiddleware(mux))
 	if err != nil {

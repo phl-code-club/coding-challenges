@@ -25,6 +25,7 @@ func createTables(db *sql.DB) error {
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT NOT NULL,
 		intro TEXT NOT NULL,
+		input TEXT NOT NULL,
 		part_1_description TEXT NOT NULL,
 		part_1_answer TEXT NOT NULL,
 		part_2_description TEXT NOT NULL,

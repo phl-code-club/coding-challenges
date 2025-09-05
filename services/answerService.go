@@ -21,23 +21,41 @@ type Answer struct {
 	CreatedAt  time.Time
 }
 
-type CheckAnswer struct {
+type AnswerData struct {
 	TeamID     int
 	QuestionID int
-	Value      string
 	Part       Part
 }
 
 type AnswerService interface {
-	CheckAnswer(input CheckAnswer) (*Answer, error)
+	CheckAnswer(input AnswerData, value string) (*Answer, error)
+	HasAnswered(input AnswerData) (*Answer, error)
 }
 
 type answerService struct {
 	db *sql.DB
 }
 
+// HasAnswered implements AnswerService.
+func (a answerService) HasAnswered(input AnswerData) (*Answer, error) {
+	result := a.db.QueryRow("SELECT id, created_at FROM answers WHERE team_id = ? AND question_id = ? AND part = ?;", input.TeamID, input.QuestionID, input.Part)
+	answer := Answer{
+		TeamID:     input.TeamID,
+		QuestionID: input.QuestionID,
+		Part:       input.Part,
+	}
+	err := result.Scan(&answer.ID, &answer.CreatedAt)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &answer, nil
+}
+
 // CheckAnswer implements AnswerService.
-func (a answerService) CheckAnswer(input CheckAnswer) (*Answer, error) {
+func (a answerService) CheckAnswer(input AnswerData, value string) (*Answer, error) {
 	result := a.db.QueryRow("SELECT id, part_1_answer, part_2_answer FROM questions WHERE id = ?", input.QuestionID)
 	var question Question
 	err := result.Scan(&question.ID, &question.Part1Answer, &question.Part2Answer)
@@ -46,11 +64,11 @@ func (a answerService) CheckAnswer(input CheckAnswer) (*Answer, error) {
 	}
 	switch input.Part {
 	case Part1:
-		if input.Value != question.Part1Answer {
+		if value != question.Part1Answer {
 			return nil, errors.New("incorrect answer")
 		}
 	case Part2:
-		if input.Value != question.Part2Answer {
+		if value != question.Part2Answer {
 			return nil, errors.New("incorrect answer")
 		}
 	}

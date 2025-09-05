@@ -1,5 +1,11 @@
 {{ define "page" }}
 <main>
-    Question List Page 
+  <ul>
+    {{ range .Questions }}
+    <li>
+      <a href="/questions/{{.ID}}">{{ .Name }}</a> {{if .HasAnsweredPart1}}✨{{end}}{{if .HasAnsweredPart2}}✨{{end}}
+    </li>
+    {{ end }}
+  </ul>
 </main>
 {{ end }}
