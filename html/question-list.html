@@ -1,6 +1,7 @@
 {{ define "page" }}
 <main>
-  <ul>
+  <h1>Questions</h1>
+  <ul class="q-list">    
     {{ range .Questions }}
     <li>
       <a href="/questions/{{.ID}}">{{ .Name }}</a> {{if .HasAnsweredPart1}}✨{{end}}{{if .HasAnsweredPart2}}✨{{end}}
