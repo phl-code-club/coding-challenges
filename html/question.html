@@ -8,8 +8,8 @@
   <h2>Part 1:</h2>
   {{ .Question.ParseMarkdown .Question.Part1Desc }}
   <br>
-  <h2>Part 2:</h2>
   {{ if .Question.HasAnsweredPart1 }}
+  <h2>Part 2:</h2>
   {{ .Question.ParseMarkdown .Question.Part2Desc }}
   {{ end }}
   {{ if .Question.HasAnsweredPart2 }}

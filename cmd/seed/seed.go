@@ -3,7 +3,9 @@ package main
 import (
 	"container/heap"
 	"database/sql"
+	"embed"
 	"enchanted-codex/database"
+	"flag"
 	"fmt"
 	"math"
 	"math/rand"
@@ -11,6 +13,9 @@ import (
 	"slices"
 	"strings"
 )
+
+//go:embed descriptions/*.txt
+var descriptions embed.FS
 
 var badSpellParts = []string{
 	"hex",
@@ -204,11 +209,20 @@ var ingredients = []string{
 }
 
 func main() {
-	os.Remove("./test.db")
-	file, err := os.ReadFile("./cmd/seed/questions.sql")
-	if err != nil {
-		panic("No questions file")
+	generateFile := flag.Bool("generate", false, "Generate inputs and answers to files instead of seeding database")
+	flag.Parse()
+
+	if *generateFile {
+		err := generateToFiles()
+		if err != nil {
+			panic(fmt.Sprintf("Failed to generate files: %v", err))
+		}
+		fmt.Println("Generated inputs and answers to files successfully!")
+		return
 	}
+
+	// Default behavior: seed database
+	os.Remove("./test.db")
 	db, err := database.GetDB()
 	if err != nil {
 		panic("No db")
@@ -232,16 +246,175 @@ func main() {
 
 	_, err = tx.Exec("INSERT INTO members (name, team_id) VALUES ('Graham', ?), ('Christina', ?);", teamID, teamID)
 	if err != nil {
-		handleError(tx, err, "no team ID")
+		handleError(tx, err, "no members")
 		return
 	}
-	_, err = tx.Exec(string(file))
+
+	// Generate and insert questions
+	err = insertQuestions(tx)
 	if err != nil {
 		handleError(tx, err, "no questions")
 		return
 	}
 
 	tx.Commit()
+	fmt.Println("Database seeded successfully!")
+}
+
+func generateToFiles() error {
+	questions := []Question{
+		generateQuestion1(),
+		generateQuestion2(),
+		generateQuestion3(),
+		generateQuestion4(),
+		generateQuestion5(),
+	}
+
+	// Create output directory if it doesn't exist
+	err := os.MkdirAll("generated", 0755)
+	if err != nil {
+		return fmt.Errorf("failed to create output directory: %v", err)
+	}
+
+	for i, q := range questions {
+		questionNum := i + 1
+
+		// Write input file
+		inputFile := fmt.Sprintf("generated/question%d_input.txt", questionNum)
+		err := os.WriteFile(inputFile, []byte(q.Input), 0644)
+		if err != nil {
+			return fmt.Errorf("failed to write input file %s: %v", inputFile, err)
+		}
+
+		// Write answers file
+		answersFile := fmt.Sprintf("generated/question%d_answers.txt", questionNum)
+		answersContent := fmt.Sprintf("Part 1: %s\nPart 2: %s\n", q.Part1Answer, q.Part2Answer)
+		err = os.WriteFile(answersFile, []byte(answersContent), 0644)
+		if err != nil {
+			return fmt.Errorf("failed to write answers file %s: %v", answersFile, err)
+		}
+
+		// Write question details file
+		detailsFile := fmt.Sprintf("generated/question%d_details.txt", questionNum)
+		detailsContent := fmt.Sprintf("Name: %s\n\nIntro:\n%s\n\nPart 1 Description:\n%s\n\nPart 2 Description:\n%s\n",
+			q.Name, q.Intro, q.Part1Description, q.Part2Description)
+		err = os.WriteFile(detailsFile, []byte(detailsContent), 0644)
+		if err != nil {
+			return fmt.Errorf("failed to write details file %s: %v", detailsFile, err)
+		}
+
+		fmt.Printf("Generated question %d: %s\n", questionNum, q.Name)
+	}
+
+	return nil
+}
+
+func insertQuestions(tx *sql.Tx) error {
+	questions := []Question{
+		generateQuestion1(),
+		generateQuestion2(),
+		generateQuestion3(),
+		generateQuestion4(),
+		generateQuestion5(),
+	}
+
+	for _, q := range questions {
+		_, err := tx.Exec(`INSERT INTO questions (
+			name, intro, input, part_1_description, part_1_answer, part_2_description, part_2_answer
+		) VALUES (?, ?, ?, ?, ?, ?, ?)`, q.Name, q.Intro, q.Input, q.Part1Description, q.Part1Answer, q.Part2Description, q.Part2Answer)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+type Question struct {
+	Name             string
+	Intro            string
+	Input            string
+	Part1Description string
+	Part1Answer      string
+	Part2Description string
+	Part2Answer      string
+}
+
+func readEmbeddedFile(filename string) string {
+	content, err := descriptions.ReadFile(filename)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to read embedded file %s: %v", filename, err))
+	}
+	return string(content)
+}
+
+func generateQuestion1() Question {
+	input, totalWords, totalChars, goodWords, goodChars := generateInput1()
+
+	return Question{
+		Name:             "Incantation Regulation",
+		Intro:            readEmbeddedFile("descriptions/question1_intro.txt"),
+		Input:            input,
+		Part1Description: readEmbeddedFile("descriptions/question1_part1.txt"),
+		Part1Answer:      fmt.Sprintf("%d,%d", totalWords, totalChars),
+		Part2Description: readEmbeddedFile("descriptions/question1_part2.txt"),
+		Part2Answer:      fmt.Sprintf("%d,%d", goodWords, goodChars),
+	}
+}
+
+func generateQuestion2() Question {
+	input, perfectCounts, brokenCounts := generateInput2()
+
+	return Question{
+		Name:             "Cryptarch's Conundrum",
+		Intro:            readEmbeddedFile("descriptions/question2_intro.txt"),
+		Input:            input,
+		Part1Description: readEmbeddedFile("descriptions/question2_part1.txt"),
+		Part1Answer:      fmt.Sprintf("%d,%d,%d,%d", perfectCounts[0], perfectCounts[1], perfectCounts[2], perfectCounts[3]),
+		Part2Description: readEmbeddedFile("descriptions/question2_part2.txt"),
+		Part2Answer:      fmt.Sprintf("%d,%d,%d,%d", perfectCounts[0]+brokenCounts[0], perfectCounts[1]+brokenCounts[1], perfectCounts[2]+brokenCounts[2], perfectCounts[3]+brokenCounts[3]),
+	}
+}
+
+func generateQuestion3() Question {
+	input, maxWare, maxVal, maxTimestamp, maxCount := generateInput3()
+
+	return Question{
+		Name:             "Aunt Agnes' Apothecary",
+		Intro:            readEmbeddedFile("descriptions/question3_intro.txt"),
+		Input:            input,
+		Part1Description: readEmbeddedFile("descriptions/question3_part1.txt"),
+		Part1Answer:      fmt.Sprintf("%s,%d", maxWare, maxVal),
+		Part2Description: readEmbeddedFile("descriptions/question3_part2.txt"),
+		Part2Answer:      fmt.Sprintf("%d,%d", maxTimestamp, maxCount),
+	}
+}
+
+func generateQuestion4() Question {
+	input, valid, avgScore := generateInput4()
+
+	return Question{
+		Name:             "Potion Commotion",
+		Intro:            readEmbeddedFile("descriptions/question4_intro.txt"),
+		Input:            input,
+		Part1Description: readEmbeddedFile("descriptions/question4_part1.txt"),
+		Part1Answer:      fmt.Sprintf("%d", valid),
+		Part2Description: readEmbeddedFile("descriptions/question4_part2.txt"),
+		Part2Answer:      fmt.Sprintf("%d", avgScore),
+	}
+}
+
+func generateQuestion5() Question {
+	input, validPaths, minPath := generateInput5()
+
+	return Question{
+		Name:             "The Mad Mage's Maze",
+		Intro:            readEmbeddedFile("descriptions/question5_intro.txt"),
+		Input:            input,
+		Part1Description: readEmbeddedFile("descriptions/question5_part1.txt"),
+		Part1Answer:      fmt.Sprintf("%d", validPaths),
+		Part2Description: readEmbeddedFile("descriptions/question5_part2.txt"),
+		Part2Answer:      fmt.Sprintf("%d", minPath),
+	}
 }
 
 func handleError(tx *sql.Tx, err error, panicMsg string) {
@@ -606,26 +779,25 @@ func dfs(start [2]int, maze [][]string, visited [][]bool) {
 	dfs([2]int{start[0], start[1] + 1}, maze, visited)
 }
 
-// AI Generated (Thanks OpenCode)
 // Priority queue for A* algorithm
-type PriorityQueue []*cell
+type priorityQueue []*cell
 
-func (pq PriorityQueue) Len() int { return len(pq) }
+func (pq priorityQueue) Len() int { return len(pq) }
 
-func (pq PriorityQueue) Less(i, j int) bool {
+func (pq priorityQueue) Less(i, j int) bool {
 	return pq[i].f < pq[j].f
 }
 
-func (pq PriorityQueue) Swap(i, j int) {
+func (pq priorityQueue) Swap(i, j int) {
 	pq[i], pq[j] = pq[j], pq[i]
 }
 
-func (pq *PriorityQueue) Push(x any) {
+func (pq *priorityQueue) Push(x any) {
 	item := x.(*cell)
 	*pq = append(*pq, item)
 }
 
-func (pq *PriorityQueue) Pop() any {
+func (pq *priorityQueue) Pop() any {
 	old := *pq
 	n := len(old)
 	item := old[n-1]
@@ -665,7 +837,7 @@ func aStarPath(maze [][]string, startX, startY, endX, endY int) int {
 	}
 
 	// Priority queue for open set
-	openSet := &PriorityQueue{}
+	openSet := &priorityQueue{}
 	heap.Init(openSet)
 
 	// Closed set to track visited cells

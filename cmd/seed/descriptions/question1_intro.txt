@@ -1,0 +1,5 @@
+The High Council of Magic has been growing increasingly concerned with the unruly number of spell casts in the Tome of Sanctioned Magic. 
+
+Over centuries, the tome has been filled with overly verbose and dramatic incantations. 
+
+To assess these spells, the council needs to know both how many segments there are to each spell (words) and how many total characters there are.

@@ -1,0 +1,41 @@
+Name: The Mad Mage's Maze
+
+Intro:
+***Oh no!*** It seems the Mad Mage has put the city under a hex again! 
+
+You are stuck in one of his winding mazes. You will need to find a way out so you can get to his tower to reverse the spell.
+
+***Input format:***
+
+- `rows`: A grid map where each cell contains either a path (`.`) or a wall (`#`).
+- `queries`: Remaining lines in format `start_row start_col end_row end_col`
+
+You can move up, down, left, right to adjacent path cells. Coordinates are 0-indexed.
+
+Part 1 Description:
+***Your task:*** For each query, determine if a path exists between the start and end points. Output the number of queries where a path exists.
+
+***Example:***
+
+```
+....
+.##.
+....
+0 0 2 3
+0 0 1 1
+```
+
+***Analysis:***
+
+- Query 1 (0,0) to (2,3): Path exists (can go around the walls)
+- Query 2 (0,0) to (1,1): No path (destination is a wall)
+- ***Output:*** `1`
+
+Part 2 Description:
+Now that you have some options for escape, you need to find the fastest way out so you can save the city!
+
+For the queries where a path exists (from Part 1), find the shortest path length for each.
+
+***Your task:*** Output the shortest path length among all valid paths from Part 1.
+
+- ***Example Output:*** `42`

@@ -1,0 +1,76 @@
+Name: Cryptarch's Conundrum
+
+Intro:
+The Cryptarch (The archmage in charge of cryptography and deciphering things) needs your help deciphering burial stones that were found in a nearby dwarven crypt.
+
+They were able to dig up a key of runes to get you started.
+
+Part 1 Description:
+***Your input:*** 3 lines of characters that form 3x3 sets which you will need to decipher into runes. The characters are `@` and `~`.
+
+You must decode the input using the Cryptarch's key and output the count of each rune. The Cryparch's key is:
+
+- `Air`:
+
+```
+~~~
+~@~
+~~~
+```
+
+- `Fire`:
+
+```
+@~@
+@~@
+~@~
+```
+
+- `Earth`:
+
+```
+~~~
+~~~
+@@@
+```
+
+- `Water`:
+
+```
+~@~
+~~~
+@~@
+```
+
+***Example Input:***
+
+```
+~~~~@~@~@~~~
+~@~~~~@~@~~~
+~~~@~@~@~@@~
+```
+
+This input represents `Air`, `Water`, `Fire`.
+
+***Your task:*** Count the total occurrences of each rune.
+
+- ***Output Format:*** `Air count, Fire count, Earth count, Water count`
+- ***Example Output:*** `1,1,0,1`
+- ***_Note:_*** that the final rune is incomplete and therefore is not counted
+
+Part 2 Description:
+Some runes may be damaged - certain `@` symbols may have been changed to `~` (but `~` never becomes `@`). A damaged pattern matches a key pattern if you can transform it into that pattern by only changing one `~` to `@`.
+
+The final rune in the previous example can be fixed.
+
+```
+~~~
+~~~
+@@~
+```
+
+This could match Earth (`~~~|~~~|@@@`) by adding `@` symbol to the end of the third line.
+
+***Your task:*** For each pattern, match it to the key pattern that you can construct with only one change of a `~` to a `@`. Count the total occurrences of each pattern type including the damaged ones that can be fixed and output in the same format as Part 1.
+
+- ***Example Output:*** `1,1,1,1`
