@@ -1,5 +1,18 @@
 package questions
 
+import (
+	"fmt"
+	"math/rand"
+	"strconv"
+	"time"
+)
+
+var stepCount = 8000
+
+var dayWindow = 80
+
+const DayInSeconds = 60 * 60 * 24
+
 var clues = []string{
 	"footprints",
 	"disturbed earth",
@@ -40,8 +53,74 @@ var loops = map[string]struct{}{
 	"ENWS": {},
 }
 
-func GenerateQuestion2() Question {
+type Step struct {
+	value     string
+	direction string
+	timestamp time.Time
+}
+
+func (s *Step) String() string {
+	return fmt.Sprintf("%d: %s (%s)", s.timestamp.Unix(), s.value, s.direction)
+}
+
+func randomTimestamp() time.Time {
+	day := rand.Int63n(int64(DayInSeconds * dayWindow))
+	return time.Unix(time.Now().Unix()-day, 0)
+}
+
+func randomStep() Step {
+	timestamp := randomTimestamp()
+	direction := getRandomVal(directions)
+	var value string
+	if flipCoin(1.0 / 2.0) {
+		value = getRandomVal(landmarks)
+	} else {
+		value = getRandomVal(clues)
+	}
+	return Step{
+		value:     value,
+		direction: direction,
+		timestamp: timestamp,
+	}
+}
+
+func generateInput2() Input {
 	var input Input
+	steps := make([]Step, stepCount)
+	upDown := 0
+	leftRight := 0
+	dirs := ""
+	for i := range stepCount {
+		step := randomStep()
+		dirs = dirs + step.direction
+		steps[i] = step
+		input.Value += step.String()
+		switch step.direction {
+		case "N":
+			upDown++
+		case "S":
+			upDown--
+		case "E":
+			leftRight++
+		case "W":
+			leftRight--
+		}
+	}
+	loopCount := 0
+	for i := 0; i < len(dirs)-3; i++ {
+		set := string(dirs[i]) + string(dirs[i+1]) + string(dirs[i+2]) + string(dirs[i+3])
+		if _, ok := loops[set]; ok {
+			loopCount++
+			i += 3
+		}
+	}
+	input.Part1Answer = strconv.Itoa(upDown + leftRight)
+	input.Part1Answer = strconv.Itoa(upDown + leftRight - loopCount)
+	return input
+}
+
+func GenerateQuestion2() Question {
+	input := generateInput2()
 	return Question{
 		Name:             "question2",
 		Intro:            readEmbeddedFile("descriptions/question2_intro.md"),
