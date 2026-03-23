@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var latlongCount = 1000
+var latlongCount = 10000
 
 type latLong struct {
 	lat   float64
