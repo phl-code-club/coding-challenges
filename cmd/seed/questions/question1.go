@@ -74,6 +74,8 @@ func generateInput1() Input {
 	var input Input
 	list := make([]string, latlongCount)
 	validCount := 0
+	landmarkCount := 0
+	clueCount := 0
 	trapCount := 0
 	thiefCount := 0
 	for i := range latlongCount {
@@ -81,6 +83,12 @@ func generateInput1() Input {
 		list[i] = val.String()
 		if val.valid {
 			validCount++
+		}
+		if val.name == "landmark" {
+			landmarkCount++
+		}
+		if val.name == "clue" {
+			clueCount++
 		}
 		if val.name == "trap" {
 			trapCount++
@@ -90,8 +98,8 @@ func generateInput1() Input {
 		}
 	}
 	input.Value = strings.Join(list, "\n")
-	input.Part1Answer = strconv.Itoa(validCount)
-	input.Part2Answer = strconv.Itoa(validCount - trapCount - (2 * thiefCount))
+	input.Part1Answer = strconv.Itoa(validCount * 10)
+	input.Part2Answer = strconv.Itoa((40 * clueCount) + (30 * landmarkCount) - (10 * trapCount) - (20 * thiefCount))
 	return input
 }
 
