@@ -6,7 +6,11 @@ import (
 	"strings"
 )
 
-var size = 1000
+var size = randBetween(800, 1300)
+
+func inBounds(i, j, border int) bool {
+	return i <= size-1-border && j <= size-1-border && i >= 0+border && j >= 0+border
+}
 
 type node struct {
 	x int
@@ -27,7 +31,6 @@ func newNode(x, y int) node {
 type nodeMap struct {
 	matrix      [][]rune
 	trackingMap map[string]bool
-	islands     int
 }
 
 func (m *nodeMap) getNode(n node) rune {
@@ -42,12 +45,13 @@ func (m *nodeMap) visit(n node) {
 	m.trackingMap[n.String()] = true
 }
 
-func (m *nodeMap) bfs(n node) {
-	m.islands++
+func (m *nodeMap) bfs(n node) int {
+	island := 0
 	queue := make([]node, 0)
 	queue = append(queue, n)
 	m.visit(n)
 	for len(queue) > 0 {
+		island++
 		curr := queue[0]
 		queue = queue[1:]
 		dirs := [4]node{
@@ -58,24 +62,50 @@ func (m *nodeMap) bfs(n node) {
 		}
 
 		for _, d := range dirs {
-			if d.x >= 0 && d.x < size && d.y >= 0 && d.y < size && !m.hasVisited(d) && m.getNode(d) == '@' {
+			if inBounds(d.y, d.x, 0) && !m.hasVisited(d) && m.getNode(d) == '@' {
 				queue = append(queue, d)
 				m.visit(d)
 			}
 		}
 	}
+
+	return island
 }
 
 func solve(m nodeMap) int {
+	islandCount := 0
 	for y, line := range m.matrix {
 		for x, r := range line {
 			n := newNode(x, y)
 			if r == '@' && !m.hasVisited(n) {
+				islandCount++
 				m.bfs(n)
 			}
 		}
 	}
-	return m.islands
+	return islandCount * size
+}
+
+func solve2(m nodeMap) int {
+	islandCount := 0
+	islands := make([]int, 0)
+	for y, line := range m.matrix {
+		for x, r := range line {
+			n := newNode(x, y)
+			if r == '@' && !m.hasVisited(n) {
+				islandCount++
+				island := m.bfs(n)
+				if island >= 4 {
+					islands = append(islands, island)
+				}
+			}
+		}
+	}
+	totalArea := 0
+	for _, island := range islands {
+		totalArea += island
+	}
+	return totalArea * islandCount
 }
 
 func generateMatrix() [][]rune {
@@ -86,10 +116,39 @@ func generateMatrix() [][]rune {
 
 	for i := range size {
 		for j := range size {
-			if flipCoin(1.0 / 3.0) {
+			if m[i][j] == '@' {
+				continue
+			}
+			if flipCoin(1.0 / 25.0) {
 				m[i][j] = '@'
+				if inBounds(i, j, 1) {
+					neighbors := [][3]node{
+						{newNode(j+1, i-1),
+							newNode(j, i-1),
+							newNode(j+1, i)},
+						{newNode(j+1, i+1),
+							newNode(j, i+1),
+							newNode(j+1, i)},
+						{newNode(j-1, i-1),
+							newNode(j, i-1),
+							newNode(j-1, i)},
+						{newNode(j-1, i+1),
+							newNode(j, i+1),
+							newNode(j-1, i)},
+					}
+					for _, n := range neighbors {
+						if flipCoin(1.0 / 4.0) {
+							a := n[0]
+							b := n[1]
+							c := n[2]
+							m[a.y][a.x] = '@'
+							m[b.y][b.x] = '@'
+							m[c.y][c.x] = '@'
+						}
+					}
+				}
 			} else {
-				m[i][j] = '-'
+				m[i][j] = '~'
 			}
 		}
 	}
@@ -116,10 +175,11 @@ func generateInput4() Input {
 	m := nodeMap{
 		matrix:      matrix,
 		trackingMap: make(map[string]bool),
-		islands:     0,
 	}
 	input.Value = matrixToString(matrix)
 	input.Part1Answer = strconv.Itoa(solve(m))
+	m.trackingMap = make(map[string]bool)
+	input.Part2Answer = strconv.Itoa(solve2(m))
 	return input
 }
 

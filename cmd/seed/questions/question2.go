@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var stepCount = 8000
+var stepCount = 10000
 
 var dayWindow = 80
 
@@ -94,16 +94,16 @@ func generateInput2() Input {
 		step := randomStep()
 		dirs = dirs + step.direction
 		steps[i] = step
-		input.Value += step.String()
+		input.Value += step.String() + "\n"
 		switch step.direction {
 		case "N":
-			upDown++
+			upDown += 10
 		case "S":
-			upDown--
+			upDown -= 10
 		case "E":
-			leftRight++
+			leftRight += 10
 		case "W":
-			leftRight--
+			leftRight -= 10
 		}
 	}
 	loopCount := 0
@@ -114,8 +114,9 @@ func generateInput2() Input {
 			i += 3
 		}
 	}
-	input.Part1Answer = strconv.Itoa(upDown + leftRight)
-	input.Part1Answer = strconv.Itoa(upDown + leftRight - loopCount)
+
+	input.Part1Answer = strconv.Itoa(upDown * leftRight)
+	input.Part2Answer = strconv.Itoa(upDown*leftRight - loopCount)
 	return input
 }
 

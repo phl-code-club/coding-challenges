@@ -14,7 +14,6 @@ func main() {
 		questions.GenerateQuestion2(),
 		questions.GenerateQuestion3(),
 		questions.GenerateQuestion4(),
-		questions.GenerateQuestion5(),
 	}
 
 	err := os.Remove("./test.db")
@@ -46,6 +45,7 @@ func main() {
 
 func insertQuestions(tx *sql.Tx, questions []questions.Question) error {
 	for _, q := range questions {
+		fmt.Printf("%s: %s, %s\n", q.Name, q.Part1Answer, q.Part2Answer)
 		_, err := tx.Exec(`INSERT INTO questions (
 			name, intro, input, part_1_description, part_1_answer, part_2_description, part_2_answer
 		) VALUES (?, ?, ?, ?, ?, ?, ?)`, q.Name, q.Intro, q.Input, q.Part1Description, q.Part1Answer, q.Part2Description, q.Part2Answer)
