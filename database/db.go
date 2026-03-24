@@ -30,7 +30,6 @@ func createTables(db *sql.DB) error {
 		part_1_answer TEXT NOT NULL,
 		part_2_description TEXT NOT NULL,
 		part_2_answer TEXT NOT NULL,
-		lock_code TEXT
 	);
 	CREATE TABLE IF NOT EXISTS answers (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,

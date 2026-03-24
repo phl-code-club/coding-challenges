@@ -114,6 +114,5 @@ func GenerateQuestion1() Question {
 		Part1Answer:      input.Part1Answer,
 		Part2Description: readEmbeddedFile("descriptions/question1_part2.md"),
 		Part2Answer:      input.Part2Answer,
-		LockCode:         "1",
 	}
 }
