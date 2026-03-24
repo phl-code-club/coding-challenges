@@ -16,12 +16,12 @@
   <h2>Congratulations! 🎉</h2>
   <h4>the next digit is {{ .Question.LockBoxCode() }}</h4>
   {{ else }}
-  <a href="/questions/{{.Question.ID}}/input" target="_blank">
-    <button>Get Input</button>
+  <a class="input" href="/questions/{{.Question.ID}}/input" target="_blank">
+    <button class="button-style">Get Input</button>
   </a>
   <form action="/questions/{{.Question.ID}}/part{{ if .Question.HasAnsweredPart1 }}2{{ else }}1{{ end }}" method="post">
     <input type="text" name="answer">
-    <button class="submit-button" type="submit">Submit</button>
+    <button class="button-style" type="submit">Submit</button>
   </form>
   {{ end }}
 </main>
