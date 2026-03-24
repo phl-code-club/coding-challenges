@@ -130,5 +130,6 @@ func GenerateQuestion2() Question {
 		Part1Answer:      input.Part1Answer,
 		Part2Description: readEmbeddedFile("descriptions/question2_part2.md"),
 		Part2Answer:      input.Part2Answer,
+		LockCode:         "3",
 	}
 }

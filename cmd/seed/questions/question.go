@@ -17,6 +17,7 @@ type Question struct {
 	Part1Answer      string
 	Part2Description string
 	Part2Answer      string
+	LockCode         string
 }
 
 type Input struct {

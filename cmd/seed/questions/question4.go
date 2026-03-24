@@ -123,18 +123,26 @@ func generateMatrix() [][]rune {
 				m[i][j] = '@'
 				if inBounds(i, j, 1) {
 					neighbors := [][3]node{
-						{newNode(j+1, i-1),
+						{
+							newNode(j+1, i-1),
 							newNode(j, i-1),
-							newNode(j+1, i)},
-						{newNode(j+1, i+1),
+							newNode(j+1, i),
+						},
+						{
+							newNode(j+1, i+1),
 							newNode(j, i+1),
-							newNode(j+1, i)},
-						{newNode(j-1, i-1),
+							newNode(j+1, i),
+						},
+						{
+							newNode(j-1, i-1),
 							newNode(j, i-1),
-							newNode(j-1, i)},
-						{newNode(j-1, i+1),
+							newNode(j-1, i),
+						},
+						{
+							newNode(j-1, i+1),
 							newNode(j, i+1),
-							newNode(j-1, i)},
+							newNode(j-1, i),
+						},
 					}
 					for _, n := range neighbors {
 						if flipCoin(1.0 / 4.0) {
@@ -193,5 +201,6 @@ func GenerateQuestion4() Question {
 		Part1Answer:      input.Part1Answer,
 		Part2Description: readEmbeddedFile("descriptions/question4_part2.md"),
 		Part2Answer:      input.Part2Answer,
+		LockCode:         "7",
 	}
 }
