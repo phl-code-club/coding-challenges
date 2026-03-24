@@ -14,6 +14,7 @@
   {{ end }}
   {{ if .Question.HasAnsweredPart2 }}
   <h2>Congratulations! 🎉</h2>
+  <h3>{{ .Question.LockBoxCode() }}</h3>
   {{ else }}
   <a href="/questions/{{.Question.ID}}/input" target="_blank">
     <button>Get Input</button>

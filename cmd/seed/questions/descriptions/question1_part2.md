@@ -1,12 +1,19 @@
+***Your task:*** For the same input, also count the locations with the type `trap` or `thief`. Then compute the answer with the following rules:
 
-***Your task:*** For the same input, count the locations with the type `trap` or `thief`. For each trap, subtract one from your valid count from part 1. For each theif, subtract two from your valid count.
+| Label | Value |
+| -------------- | --------------- |
+| clue | 40 |
+| landmark | 30 |
+| thief | 20 |
+| trap | 10 |
 
-***This will use the same example from Part 1***
+***This will use the same example input from Part 1***
 
 ***Analysis:***
 
-- Part 1 Valid Count: 2
-- `trap`: subtract 1
-- `thief`: subtract 2
-- ***Output Format:*** `Total valid Count after deductions`
-- ***Example Output:*** `-1`
+- `clue`: 1
+- `landmark`: 1
+- `trap`: 1
+- `thief`: 1
+- ***Output Format:*** `(40 * clue count) + (30 * landmark count) - (20 * thief count) - (10 * trap count)`
+- ***Example Output:*** `40`

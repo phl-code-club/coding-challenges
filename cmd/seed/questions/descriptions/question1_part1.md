@@ -1,7 +1,8 @@
+***Your input:*** A list of coordinates with latitude, longitude, and type in the form: `(51.4934, 0.0098): landmark`
 
-***Your input:*** A list of coordinates with latitude, longitude, and type. (51.4934, 0.0098): landmark
-
-***Your task:*** Your first task involves counting the number of valid locations listed on the scroll, indicated by a type of `landmark` or `clue`. Output the sum of all landmarks and clues to move on to your next challenge.
+***Your task:*** Counting the number of valid locations listed on the scroll,
+indicated by a type of `landmark` or `clue`. Output the sum of all landmarks
+and clues multiplied by 10 to move on to your next challenge.
 
 ***Example Input:***
 
@@ -18,7 +19,7 @@
 
 ***Analysis:***
 
-- `landmark`: 1 landmarks
-- `clue`: 1 clue
-- ***Output Format:*** `total number of landmarks and clues`
-- ***Example Output:*** `1`
+- `landmark`: 1
+- `clue`: 1
+- ***Output Format:*** `(landmark count + clue count) * 10`
+- ***Example Output:*** `20`

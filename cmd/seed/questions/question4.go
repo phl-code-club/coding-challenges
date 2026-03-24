@@ -93,9 +93,9 @@ func solve2(m nodeMap) int {
 		for x, r := range line {
 			n := newNode(x, y)
 			if r == '@' && !m.hasVisited(n) {
-				islandCount++
 				island := m.bfs(n)
 				if island >= 4 {
+					islandCount++
 					islands = append(islands, island)
 				}
 			}
@@ -137,7 +137,7 @@ func generateMatrix() [][]rune {
 							newNode(j-1, i)},
 					}
 					for _, n := range neighbors {
-						if flipCoin(1.0 / 4.0) {
+						if flipCoin(1.0 / 10.0) {
 							a := n[0]
 							b := n[1]
 							c := n[2]

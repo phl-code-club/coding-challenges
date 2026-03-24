@@ -85,7 +85,7 @@ func parseStep(str string) (questions.Step, error) {
 }
 
 func solveQ1P1(q *services.Question) (string, error) {
-	lines := strings.Split(q.Input, "\n")
+	lines := strings.Split(strings.TrimSpace(q.Input), "\n")
 	validCount := 0
 	latLongs := make([]questions.LatLong, len(lines))
 	for i, line := range lines {
@@ -102,7 +102,7 @@ func solveQ1P1(q *services.Question) (string, error) {
 }
 
 func solveQ1P2(q *services.Question) (string, error) {
-	lines := strings.Split(q.Input, "\n")
+	lines := strings.Split(strings.TrimSpace(q.Input), "\n")
 	landmarkCount := 0
 	clueCount := 0
 	thiefCount := 0
@@ -195,13 +195,37 @@ func solveQ2P2(q *services.Question) (string, error) {
 	return strconv.Itoa(upDown*leftRight - loopCount), nil
 }
 
-var river = " /~~/\n/~~/ \n\\~~\\ \n \\~~\\\n /~~/"
+var river = strings.Trim(`
+ /~~/
+/~~/ 
+\~~\ 
+ \~~\
+ /~~/
+`, "\n")
 
-var star = "\\ | /\n \\|/ \n--X--\n /|\\ \n/ | \\"
+var star = strings.Trim(`
+\ | /
+ \|/ 
+--X--
+ /|\ 
+/ | \
+`, "\n")
 
-var gem = " ___ \n//|\\\\\n\\\\|//\n \\_/ \n  V  "
+var gem = strings.Trim(`
+ ___ 
+//|\\
+\\|//
+ \_/ 
+  V  
+`, "\n")
 
-var forest = "  ^  \n /^\\ \n//^^\\\n ||^\\\n ||| "
+var forest = strings.Trim(`
+  ^  
+ /^\ 
+//^^\
+ ||^\
+ ||| 
+`, "\n")
 
 var pictogramList = []string{
 	river,
@@ -211,7 +235,7 @@ var pictogramList = []string{
 }
 
 func solveQ3P1(q *services.Question) (string, error) {
-	lines := strings.Split(strings.TrimSpace(q.Input), "\n")
+	lines := strings.Split(strings.Trim(q.Input, "\n"), "\n")
 	acc := make([]string, 0, 5)
 	validCount := 0
 	invalidCount := 0
@@ -231,7 +255,7 @@ func solveQ3P1(q *services.Question) (string, error) {
 }
 
 func solveQ3P2(q *services.Question) (string, error) {
-	lines := strings.Split(strings.TrimSpace(q.Input), "\n")
+	lines := strings.Split(strings.Trim(q.Input, "\n"), "\n")
 	acc := make([]string, 0, 5)
 	validCount := 0
 	invalidCount := 0
@@ -373,9 +397,9 @@ func solveQ4P2(q *services.Question) (string, error) {
 	for i, line := range islandMap {
 		for j, char := range line {
 			if char == "@" && !trackingMap[i][j] {
-				islandCount++
 				area := bfs([2]int{j, i})
 				if area >= 4 {
+					islandCount++
 					islandArea += area
 				}
 			}
@@ -408,7 +432,174 @@ func TestQuestion1(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting questions: %v", err)
 	}
-	tests := make([]testCase, 0)
+	tests := []testCase{
+		{
+			name:   "Question 1 Example Part 1",
+			want:   "20",
+			solver: solvers[0][0],
+			question: &services.Question{
+				ID: 0,
+				Input: `
+(51.4934,0.0098):landmark
+(23.7275,37.9838):clue
+(40.7128,74.0060):trap
+(35.6762,139.6503):thief
+(48.8566,2.3522):merchant
+(41.9028,12.4964):ship
+(55.7558,37.6173):campsite
+(19.4326,99.1332):rumor
+				`,
+			},
+		},
+		{
+			name:   "Question 1 Example Part 2",
+			want:   "40",
+			solver: solvers[0][1],
+			question: &services.Question{
+				ID: 0,
+				Input: `
+(51.4934,0.0098):landmark
+(23.7275,37.9838):clue
+(40.7128,74.0060):trap
+(35.6762,139.6503):thief
+(48.8566,2.3522):merchant
+(41.9028,12.4964):ship
+(55.7558,37.6173):campsite
+(19.4326,99.1332):rumor
+`,
+			},
+		},
+		{
+			name:   "Question 2 Example Part 1",
+			want:   "200",
+			solver: solvers[1][0],
+			question: &services.Question{
+				ID: 1,
+				Input: `
+1742134800: bones (N)
+1741789200: footprints (E)
+1740924000: marked trees (S)
+1741270800: quicksand (W)
+1742048400: dark ravine (N)
+1742048400: river rapids (N)
+1742048400: jagged rocks (E)
+`,
+			},
+		},
+		{
+			name:   "Question 2 Example Part 2",
+			want:   "199",
+			solver: solvers[1][1],
+			question: &services.Question{
+				ID: 1,
+				Input: `
+1742134800: bones (N)
+1741789200: footprints (E)
+1740924000: marked trees (S)
+1741270800: quicksand (W)
+1742048400: dark ravine (N)
+1742048400: river rapids (N)
+1742048400: jagged rocks (E)
+`,
+			},
+		},
+		{
+			name:   "Question 3 Example Part 1",
+			want:   "4",
+			solver: solvers[2][0],
+			question: &services.Question{
+				ID: 2,
+				Input: `
+~ / /
+ \/ |
+-X  -
+|/|^_ 
+/~|__
+ /~~/
+/~~/ 
+\~~\ 
+ \~~\
+ /~~/
+\ | /
+ \|/ 
+--X--
+ /|\ 
+/ | \
+~ / /
+ \/ |
+-X  -
+|/|^_ 
+/~|__
+`,
+			},
+		},
+		{
+			name:   "Question 3 Example Part 2",
+			want:   "8",
+			solver: solvers[2][1],
+			question: &services.Question{
+				ID: 2,
+				Input: `
+~ / /
+ \/ |
+-X  -
+|/|^_ 
+/~|__
+ /~~/
+/~~/ 
+\~~\ 
+ \~~\
+ /~~/
+\ | /
+ \|/ 
+--X--
+ /|\ 
+/ | \
+~ / /
+ \/ |
+-X  -
+|/|^_ 
+/~|__
+`,
+			},
+		},
+		{
+			name:   "Question 4 Example Part 1",
+			want:   "24",
+			solver: solvers[3][0],
+			question: &services.Question{
+				ID: 3,
+				Input: `
+~~~~~~~~
+~~@@~~~~
+~~@@~~~~
+~~~~@~~~
+~~~~@@@@
+~~~~~~~~
+~~~@~~~~
+~~~~~~~~
+`,
+			},
+		},
+		{
+			name:   "Question 4 Example Part 2",
+			want:   "18",
+			solver: solvers[3][1],
+			question: &services.Question{
+				ID: 3,
+				Input: `
+~~~~~~~~
+~~@@~~~~
+~~@@~~~~
+~~~~@~~~
+~~~~@@@@
+~~~~~~~~
+~~~@~~~~
+~~~~~~~~
+`,
+			},
+		},
+	}
 	for i, q := range qs {
 		question, _ := questionService.GetQuestionByID(q.ID)
 		tc1 := testCase{
@@ -432,7 +623,7 @@ func TestQuestion1(t *testing.T) {
 				t.Errorf("Failed parsing input: %v", err)
 			}
 			if tt.want != got {
-				t.Errorf("GenerateQuestion1() = %v, want %v", got, tt.want)
+				t.Errorf("Question Tests %s. Got = %v, want %v", tt.name, got, tt.want)
 			}
 		})
 	}

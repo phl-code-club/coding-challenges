@@ -169,10 +169,15 @@ h1 {
   text-align: center;
   padding: .5em 0;
 }
-p, ul {
-margin: auto;
+
+p,
+ul {
+  margin: auto;
 }
-p, ul, label {
+
+p,
+ul,
+label {
   max-width: 28em;
   padding: .2em;
 }
@@ -188,7 +193,7 @@ ul {
   list-style: none;
 }
 
- 
+
 ul li::marker {
   font-size: .8em;
   padding: 0;
@@ -254,13 +259,13 @@ em {
 }
 
 form {
-display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 28em;
-    justify-content: flex-end;
-    gap: 0.5em;
-  }
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 28em;
+  justify-content: flex-end;
+  gap: 0.5em;
+}
 
 form.team-form {
   display: flex;
@@ -274,8 +279,8 @@ form.team-form {
 }
 
 input {
-    border-radius: 0.5rem;
-    padding: .2em 0.5em;
+  border-radius: 0.5rem;
+  padding: .2em 0.5em;
 }
 
 .team-form>div>input {

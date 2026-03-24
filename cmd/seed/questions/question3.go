@@ -97,6 +97,7 @@ func generateInput3() Input {
 	var input Input
 	pictogramList := make([]string, pictogramCount)
 	validCount := 0
+	invalidCount := 0
 	longestSeq := 0
 	currentSeq := 0
 	for i := range pictogramCount {
@@ -108,13 +109,14 @@ func generateInput3() Input {
 			}
 			validCount++
 		} else {
+			invalidCount++
 			currentSeq = 0
 		}
 		pictogramList[i] = p.String()
 	}
 	input.Value = strings.Join(pictogramList, "\n")
-	input.Part1Answer = strconv.Itoa(validCount * (len(pictogramList) - validCount))
-	input.Part2Answer = strconv.Itoa((validCount * (len(pictogramList) - validCount) * longestSeq))
+	input.Part1Answer = strconv.Itoa(validCount * invalidCount)
+	input.Part2Answer = strconv.Itoa(validCount * invalidCount * longestSeq)
 	return input
 }
 
