@@ -54,13 +54,13 @@ var loops = map[string]struct{}{
 }
 
 type Step struct {
-	value     string
-	direction string
-	timestamp time.Time
+	Value     string
+	Direction string
+	Timestamp time.Time
 }
 
 func (s *Step) String() string {
-	return fmt.Sprintf("%d: %s (%s)", s.timestamp.Unix(), s.value, s.direction)
+	return fmt.Sprintf("%d: %s (%s)", s.Timestamp.Unix(), s.Value, s.Direction)
 }
 
 func randomTimestamp() time.Time {
@@ -78,9 +78,9 @@ func randomStep() Step {
 		value = getRandomVal(clues)
 	}
 	return Step{
-		value:     value,
-		direction: direction,
-		timestamp: timestamp,
+		Value:     value,
+		Direction: direction,
+		Timestamp: timestamp,
 	}
 }
 
@@ -92,10 +92,10 @@ func generateInput2() Input {
 	dirs := ""
 	for i := range stepCount {
 		step := randomStep()
-		dirs = dirs + step.direction
+		dirs = dirs + step.Direction
 		steps[i] = step
 		input.Value += step.String() + "\n"
-		switch step.direction {
+		switch step.Direction {
 		case "N":
 			upDown += 10
 		case "S":

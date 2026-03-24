@@ -12,17 +12,12 @@ Seeds the database with dynamically generated questions, inputs, and answers:
 go run cmd/seed/seed.go
 ```
 
-### File Generation
+## Testing
 
-Generates inputs and answers to files in a `generated/` directory:
+Once you see the database you can run:
 
 ```bash
-go run cmd/seed/seed.go -generate
+DB_PATH="../../../test.db" go test ./... -v
 ```
 
-This creates:
-
-- `questionX_input.txt` - The input data for each question
-- `questionX_answers.txt` - The answers for both parts
-- `questionX_details.txt` - Question name, intro, and part descriptions
-
+This will run the tests. As long as they all pass you're good to go!

@@ -2,49 +2,21 @@ package questions
 
 import (
 	"fmt"
-	"regexp"
 	"strconv"
 	"strings"
 )
 
 var latlongCount = 10000
 
-type latLong struct {
-	lat   float64
-	long  float64
-	name  string
-	valid bool
+type LatLong struct {
+	Lat   float64
+	Long  float64
+	Name  string
+	Valid bool
 }
 
-func (l *latLong) String() string {
-	return fmt.Sprintf("(%.4f,%.4f):%s", l.lat, l.long, l.name)
-}
-
-func parseLatLong(str string) (latLong, error) {
-	rgxp := regexp.MustCompile(`\((\d+\.\d{4}), (\d+\.\d{4})\): (.*)`)
-	matches := rgxp.FindStringSubmatch(str)
-	if len(matches) < 4 {
-		return latLong{}, fmt.Errorf("invalid lat/long line: %s", str)
-	}
-	lat, err := strconv.ParseFloat(matches[1], 64)
-	if err != nil {
-		return latLong{}, fmt.Errorf("error parsing latitude %s: %w", matches[1], err)
-	}
-	if lat < -90.0 || lat > 90.0 {
-		return latLong{}, fmt.Errorf("invalid latitude %f", lat)
-	}
-	long, err := strconv.ParseFloat(matches[2], 64)
-	if err != nil {
-		return latLong{}, fmt.Errorf("error parsing longitude %s: %w", matches[2], err)
-	}
-	if long < -180.0 || long > 180.0 {
-		return latLong{}, fmt.Errorf("invalid longitude %f", long)
-	}
-	return latLong{
-		lat:  lat,
-		long: long,
-		name: matches[3],
-	}, nil
+func (l *LatLong) String() string {
+	return fmt.Sprintf("(%.4f,%.4f):%s", l.Lat, l.Long, l.Name)
 }
 
 var latLongTypes = []string{
@@ -58,15 +30,15 @@ var latLongTypes = []string{
 	"rumor",
 }
 
-func generateLatLong() latLong {
+func generateLatLong() LatLong {
 	lat := randFloatBetween(-90.0, 90.0)
 	long := randFloatBetween(-180.0, 180.0)
 	name := getRandomVal(latLongTypes)
-	return latLong{
-		lat:   lat,
-		long:  long,
-		name:  name,
-		valid: name == "landmark" || name == "clue",
+	return LatLong{
+		Lat:   lat,
+		Long:  long,
+		Name:  name,
+		Valid: name == "landmark" || name == "clue",
 	}
 }
 
@@ -81,19 +53,19 @@ func generateInput1() Input {
 	for i := range latlongCount {
 		val := generateLatLong()
 		list[i] = val.String()
-		if val.valid {
+		if val.Valid {
 			validCount++
 		}
-		if val.name == "landmark" {
+		if val.Name == "landmark" {
 			landmarkCount++
 		}
-		if val.name == "clue" {
+		if val.Name == "clue" {
 			clueCount++
 		}
-		if val.name == "trap" {
+		if val.Name == "trap" {
 			trapCount++
 		}
-		if val.name == "thief" {
+		if val.Name == "thief" {
 			thiefCount++
 		}
 	}
