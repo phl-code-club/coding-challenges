@@ -186,7 +186,7 @@ func generateInput4() Input {
 func GenerateQuestion4() Question {
 	input := generateInput4()
 	return Question{
-		Name:             "question4",
+		Name:             "Island Hopping",
 		Intro:            readEmbeddedFile("descriptions/question4_intro.md"),
 		Input:            input.Value,
 		Part1Description: readEmbeddedFile("descriptions/question4_part1.md"),

@@ -79,7 +79,7 @@ func GenerateQuestion1() Question {
 	input := generateInput1()
 
 	return Question{
-		Name:             "LatLong",
+		Name:             "Cartography 101",
 		Intro:            readEmbeddedFile("descriptions/question1_intro.md"),
 		Input:            input.Value,
 		Part1Description: readEmbeddedFile("descriptions/question1_part1.md"),

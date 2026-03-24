@@ -123,7 +123,7 @@ func generateInput2() Input {
 func GenerateQuestion2() Question {
 	input := generateInput2()
 	return Question{
-		Name:             "question2",
+		Name:             "A Perilous Journey",
 		Intro:            readEmbeddedFile("descriptions/question2_intro.md"),
 		Input:            input.Value,
 		Part1Description: readEmbeddedFile("descriptions/question2_part1.md"),

@@ -3,7 +3,9 @@
 
 ***Your task:*** Find all the islands in the grid then multiple by the grid size.
 
-NOTE: An island is an orthogonal connected group of `@` cells — two `@` cells belong to the same island if they are directly adjacent (up, down, left, or right, but not diagonal).
+NOTE: An island is an orthogonal connected group of `@` cells — two `@` cells
+belong to the same island if they are directly adjacent (up, down, left, or right,
+but not diagonal).
 
 ***Example Input:***
 
@@ -18,7 +20,8 @@ NOTE: An island is an orthogonal connected group of `@` cells — two `@` cells 
 ~~~~~~~~
 ```
 
-In the example above there are 3 islands — the 2×2 block, the L-shape on row 4-5, and the single cell on row 7.
+In the example above there are 3 islands — the 2×2 block, the L-shape on row
+4-5, and the single cell on row 7.
 
 ***Analysis:***
 
