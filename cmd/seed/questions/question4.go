@@ -162,7 +162,7 @@ func matrixToString(m [][]rune) string {
 		for _, r := range line {
 			str.WriteRune(r)
 		}
-		if i < size {
+		if i < size-1 {
 			str.WriteString("\n")
 		}
 	}
