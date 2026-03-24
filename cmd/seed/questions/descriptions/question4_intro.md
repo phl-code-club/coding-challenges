@@ -1,3 +1,2 @@
-The local university needs you to substitute for the usual Intro to Potions professor.
+Tucked away at the back of the cave, a weathered sailboat bobs in an underground channel. This journey is requiring you to travel through deep waters, but looking at your map, there are countless uncharted islands plotted across the vast ocean. You'll have to narrow down the count and search each one thoroughly, the Ruby is on one of these islands.
 
-The current assignment from the students is learning to brew custom potions.

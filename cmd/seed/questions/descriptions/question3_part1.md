@@ -1,21 +1,67 @@
-***Your input:*** A list of sales where each sale takes a whole line and is in the format `timestamp:amount:category`. Where `timestamp` is an `int`, `amount` is also an `int`, and category is a `string`.
+***Your input:*** A list of hieroglyphs, each made up of 5 lines of 5 characters. These hieroglyphs are separated by a blank line. Each character is one of: " ", "\", "/", "|", "~", "-", "_", "^".
 
-***Your task:*** Group sales by category and find the category with the highest total amount. Output the category name and its total amount.
+The valid hieroglyphs are:
+
+River:
+
+```
+ /~~/
+/~~/
+\~~\
+ \~~\
+ /~~/
+```
+
+Star:
+
+```
+\ | /
+ \|/
+--X--
+ /|\
+/ | \
+```
+
+Gem:
+
+```
+ ___
+/___\
+\___/
+ \_/
+  V
+```
+
+Forest:
+
+```
+  ^
+ /^\
+//^^\ 
+ ||^\
+ |||
+```
+
+***Your task:*** Count the valid hieroglyphs and the invalid ones, then multiply those two counts together.
 
 ***Example input:***
 
 ```
-110:50:herbs
-175:30:scrolls
-220:25:herbs
-250:40:scrolls
-300:35:elixirs
+ /~~/
+/~~/
+\-~\
+ \~~\
+ /~~/
+
+\ | /
+ \|/
+--X--
+ /|\
+/ | \
 ```
 
-***Analysis:***
+***Analysis:*** This input represents an invalid River and a valid Star.
 
-- herbs: 50 + 25 = 75
-- scrolls: 30 + 40 = 70
-- elixirs: 35
-- ***Output Format:*** `category, amount`
-- ***Example Output:*** `herbs,75`
+- ***Output Format:*** `product of valid and invalid hieroglyphs`
+- ***Example Output:*** `1` (1 valid × 1 invalid = 1)
+

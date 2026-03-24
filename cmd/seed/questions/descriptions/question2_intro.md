@@ -1,3 +1,3 @@
-The Cryptarch (The archmage in charge of cryptography and deciphering things) needs your help deciphering burial stones that were found in a nearby dwarven crypt.
+You've managed to filter out the risky locations that stand in your way and plot the crucial landmarks and clues. You can now press on... But do tread lightly, there may still be dangers ahead.
 
-They were able to dig up a key of runes to get you started.
+Every step counts: Lose your bearings and you may never find your way back.

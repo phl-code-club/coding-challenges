@@ -1,3 +1,1 @@
-You finally have your map complete after stitching it with the other half. On
-closer inspection, you notice something strange on the back of it. Along the tear
-there is a list of what appear to be coordinates.
+I see you've made it to Indy Hall, quite a brave soul you are. It is here you'll find a scroll. Upon unravelling it, you'll reveal a list of coordinates and the second half of your map. To embark on your journey to the sacred treasure, you must make sense of the coordinates provided. Some are important landmarks, insightful clues- Others obstacles threatening to prevent your conquest. Tread wisely upon your journey to the treasured ruby. Best of luck matey.

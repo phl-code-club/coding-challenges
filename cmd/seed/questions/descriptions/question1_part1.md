@@ -1,19 +1,24 @@
-***Your input:*** A list of spells (segments separated by spaces) separated by a newline.
 
-***Your task:*** For each spell, count the number of words and the total number of characters (excluding spaces). Output the sum of all word counts and the sum of all character counts. The output should be a tuple with two entries, the first being the total words, the second being the total characters.
+***Your input:*** A list of coordinates with latitude, longitude, and type. (51.4934, 0.0098): landmark
+
+***Your task:*** Your first task involves counting the number of valid locations listed on the scroll, indicated by a type of `landmark` or `clue`. Output the sum of all landmarks and clues to move on to your next challenge.
 
 ***Example Input:***
 
 ```
-skeleton curse
-fireball
-transmute metal to wood
+(51.4934, 0.0098): landmark
+(23.7275, 37.9838): clue
+(40.7128, 74.0060): trap
+(35.6762, 139.6503): thief
+(48.8566, 2.3522): merchant
+(41.9028, 12.4964): ship
+(55.7558, 37.6173): campsite
+(19.4326, 99.1332): rumor
 ```
 
 ***Analysis:***
 
-- `skeleton curse`: 2 segments, 13 characters
-- `fireball`: 1 segment, 8 characters
-- `transmute metal to wood`: 4 segments, 19 characters
-- ***Output Format:*** `Total segments, Total characters`
-- ***Example Output:*** `7,40`
+- `landmark`: 1 landmarks
+- `clue`: 1 clue
+- ***Output Format:*** `total number of landmarks and clues`
+- ***Example Output:*** `1`

@@ -1,14 +1,11 @@
-These findings are helpful, but Agnes desires a bit more insight. She wants to know the times that people are buying the most.
+You crack a smile in triumph. You've located all the valid hieroglyphs! But wait... the cave remains sealed. Scratching your head, you stand stumped and confused. This should've worked! It's no wonder none have managed to make it through. You take a moment and ponder, the beaming sun of the desert producing beads of sweat at the nape of your neck. You need to think fast, you hear what sounds like thieves in the distance. Then it hits you... patterns!
 
-***Your task:*** In windows of 100, find the set with the most sales.
+***Your task:*** Find the longest consecutive sequence of valid hieroglyphs, then multiply your Part 1 answer by that length.
 
-Output the start time of this window and the number of sales it contains. If there are ties, choose the earliest start time. Using the example from part 1:
+***This will use the same example from Part 1***
 
 ***Analysis***
 
-- First set: 110 to 210, 2 sales
-- Second set: 175 to 275, 3 sales
-- Third set: 220 to 320, 3 sales
-- ***Output Format:*** `Starting time, Sale count`
-- ***Output Example:*** `175,3`
-  - Because we pick the earliest window the 2 with the most sales.
+- ***Output Format:*** `product of longest sequence and part 1 answer`
+- ***Output Example:*** `1` (Part 1 answer of 1 × longest sequence of 1 = 1)
+  Note: A sequence resets as soon as an invalid pictogram is encountered

@@ -1,16 +1,9 @@
-The professor would like a report, including the average score of the class. Here is the system for scoring recipes:
+Some of these islands are too small to possibly possess any treasure. You'll need to be smart about where you drop anchor.
 
-- ***Base score*** = sum of all ingredient amounts
-- ***Bonus***: If recipe contains both "kingsfoil" and "rainbow quartz", multiply total by 2
-- ***Penalty***: If recipe contains "foxglove" or "mercury", subtract 25 points for each from total
-- ***Minimum score is 0*** (scores cannot go negative)
-
-***Your task:*** Calculate the average score (Rounded down to the nearest integer) for valid recipes from Part 1.
-
+***Your task:*** Find all islands with an area of 4 or more cells. Sum their total area, then multiply by the total number of islands (including small ones).
 Using the example from part 1 we get:
 
-- First recipe: ***valid*** (initial amount 115, -25 penalty, total 90)
-- Second recipe: ***invalid***
-- Third recipe: ***invalid***
-- Fourth recipe ***valid*** (initial amount 100, 100 bonus, total 200)
-- ***Example Output:*** `145`
+***This will use the same example from Part 1***
+
+- ***Output Format:*** `product of areas of islands with 4+ cells and total islands`
+- ***Example Output:*** `27` (islands of size 4+: the 2×2 block has 4 cells, the L-shape has 5 cells → total area 9, multiplied by 3 total islands = 27)

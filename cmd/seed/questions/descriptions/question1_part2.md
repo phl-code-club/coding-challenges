@@ -1,24 +1,12 @@
-The council is surprised by how large that value is. It turns out that this list is the list of _all_ spells, not just allowed. You need to filter out any forbidden spells before you add to the running total.
 
-***Your task:*** For the same input, count the segments and characters, but omit spells that include any of the following words:
-
-- `hex`
-- `curse`
-- `poison`
-- `skull`
-- `death`
-- `trouble`
-- `error`
-- `gun`
-- `bomb`
-- `evil`
+***Your task:*** For the same input, count the locations with the type `trap` or `thief`. For each trap, subtract one from your valid count from part 1. For each theif, subtract two from your valid count.
 
 ***This will use the same example from Part 1***
 
 ***Analysis:***
 
-- `skeleton curse`: Contains forbidden word "curse", skip
-- `fireball`: 1 segment, 8 characters
-- `transmute metal to wood`: 4 segments, 19 characters
-- ***Output Format:*** `Total segments, Total characters`
-- ***Example Output:*** `5,27`
+- Part 1 Valid Count: 2
+- `trap`: subtract 1
+- `thief`: subtract 2
+- ***Output Format:*** `Total valid Count after deductions`
+- ***Example Output:*** `-1`

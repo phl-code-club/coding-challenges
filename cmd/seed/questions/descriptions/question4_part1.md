@@ -1,24 +1,26 @@
-Each recipe consists of ingredients with numeric amounts. A recipe is valid if it meets all these criteria:
+***Your Input:*** A grid of characters between 800×800 and 1300×1300 in size. Each cell is either @ (land) or ~ (water).
 
-1. It has at least 3 ingredients
-2. Total amount is greater than or equal to 100
-3. No single ingredient exceeds 50% of the total
+***Your task:*** Find all the islands in the grid then multiple by the grid size.
 
-***Your task:*** Given a list of recipes, count how many are valid according to the rules above.
+NOTE: An island is a connected group of @ cells — two @ cells belong to the same island if they are directly adjacent (up, down, left, or right, but not diagonal).
 
-***Example recipes:***
+***Example Input:***
 
 ```
-mugwort:30, eye of newt:40, vinegar:30, foxglove: 15
-cilantro:60, dragons claw:25, toad juice:15
-deathclaw saliva:70, devils cap:50
-kingsfoil:20, rainbow quartz:30, mead:50
+~~~~~~~~
+~~@@~~~~
+~~@@~~~~
+~~~~@~~~
+~~~~@@@@
+~~~~~~~~
+~~~@~~~~
+~~~~~~~~
 ```
+
+In the example above there are 3 islands — the 2×2 block, the L-shape on row 4-5, and the single cell on row 7.
 
 ***Analysis:***
 
-- First recipe: ***valid*** (4 ingredients, totals 115, max is 40%)
-- Second recipe: ***invalid*** (cilantro is 60% of the total)
-- Third recipe: ***invalid*** (only 2 ingredients)
-- Fourth recipe ***valid*** (3 ingredients, totals 100, max is 50%)
-- ***Example Output:*** `2`
+- ***Output Format:*** `product of island count and grid size`
+- ***Example Output:*** `24` (3 islands × grid size of 8 = 24)`
+
