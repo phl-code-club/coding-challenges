@@ -19,7 +19,7 @@ and clues multiplied by 10 to move on to your next challenge.
 
 ***Analysis:***
 
-- `landmark`: 1
-- `clue`: 1
+- landmark count: 1
+- clue count: 1
 - ***Output Format:*** `(landmark count + clue count) * 10`
 - ***Example Output:*** `20`

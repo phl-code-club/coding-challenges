@@ -2,8 +2,7 @@
 `~` (water).
 
 ***Your task:*** Find all the islands in the grid then multiple by the grid size.
-
-NOTE: An island is an orthogonal connected group of `@` cells — two `@` cells
+An island is an orthogonal connected group of `@` cells — two `@` cells
 belong to the same island if they are directly adjacent (up, down, left, or right,
 but not diagonal).
 
@@ -25,5 +24,8 @@ In the example above there are 3 islands — the 2×2 block, the L-shape on row
 
 ***Analysis:***
 
+- Island count: 3
+- Grid size: 8
 - ***Output Format:*** `island count * grid size`
-- ***Example Output:*** `24` (3 islands × grid size of 8 = 24)`
+- ***Example Output:*** `24`
+  - *(3 islands × grid size of 8 = 24)*

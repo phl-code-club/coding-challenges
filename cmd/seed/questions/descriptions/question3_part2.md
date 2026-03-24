@@ -12,5 +12,12 @@ _**This will use the same example from Part 1**_
 
 _**Analysis**_
 
+- River count: 1
+- Start count: 1
+- Gem count: 0
+- Forest count: 0
+- Invalid count: 2
+- Longest sequence: 2
 - _**Output Format:**_ `part 1 answer * longest sequence`
-- _**Output Example:**_ `8` (Part 1 answer of `4` × longest sequence of `2` = `8`)
+- _**Output Example:**_ `8`
+  - _(Part 1 answer of `4` × longest sequence of `2` = `8`)_

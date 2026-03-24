@@ -1,6 +1,10 @@
 # I know this is not the ideal way to write this dockerfile but whatever
 FROM golang:1.25-alpine
 
+RUN apk update
+
+RUN apk add --upgrade sqlite
+
 LABEL org.opencontainers.image.source https://github.com/phl-code-club/coding-challenges
 
 WORKDIR /var/app

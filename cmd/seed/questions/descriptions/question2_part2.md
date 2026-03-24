@@ -7,11 +7,27 @@ paths that loop back to where you started.
 form a closed loop cancel out. Scan through the directions in order — when you
 find a loop, subtract 1 from your total.
 
+***valid loops are:***
+
+- `NWSE`
+- `NESW`
+- `SWNE`
+- `SENW`
+- `WNES`
+- `WSEN`
+- `ESWN`
+- `ENWS`
+
+Loops are non-overlapping — once a loop is found, skip past all 4 steps
+before looking for the next one.
+
 ***This will use the same example input from Part 1***
 
-- ***valid loops are:*** `NWSE`, `NESW`, `SWNE`, `SENW`, `WNES`, `WSEN`, `ESWN`, `ENWS`
+- North steps: 3 * 10 = 30
+- South steps: 1 * 10 = 10
+- East steps: 2 * 10 = 20
+- West steps: 1 * 10 = 10
+- Loop count: 1
 - ***Output Format:*** `N/S distance * E/W distance - loop count`
-- ***Example Output:*** `199` (Previous total: 200, one loop found → 200 - 1 = 199)
-
-Note: Loops are non-overlapping — once a loop is found, skip past all 4 steps
-before looking for the next one.
+- ***Example Output:*** `199`
+  - *(Previous total: 200, one loop found → 200 - 1 = 199)*

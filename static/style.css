@@ -22,8 +22,6 @@
 body {
   /* 4. Add accessible line-height */
   line-height: 1.5;
-  /* 5. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
 }
 
 /* 6. Improve media defaults */
@@ -205,6 +203,7 @@ ul li::before {
 ul li::marker {
   font-size: .8em;
   padding: 0;
+}
 
 .q-list {
   list-style: none;
@@ -377,8 +376,6 @@ pre>code {
   text-align: center;
   text-decoration: none;
   user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
 .button-style:hover {

@@ -71,7 +71,14 @@ counts together.
 /~|__
 ```
 
-***Analysis:*** This input represents an invalid River and a valid Star.
+***Analysis:*** This input represents an invalid pictogram, a valid River, a
+valid Star, and another invalid pictogram.
 
+- River count: 1
+- Start count: 1
+- Gem count: 0
+- Forest count: 0
+- Invalid count: 2
 - ***Output Format:*** `valid pictograms * invalid pictograms`
-- ***Example Output:*** `4` (2 valid × 2 invalid = 4)
+- ***Example Output:*** `4`
+  - *(2 valid × 2 invalid = 4)*
