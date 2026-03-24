@@ -21,6 +21,21 @@ type Question struct {
 	HasAnsweredPart2 bool
 }
 
+func (q Question) LockBoxCode() int {
+	switch q.ID {
+	case 1:
+		return 1
+	case 2:
+		return 3
+	case 3:
+		return 3
+	case 4:
+		return 7
+	default:
+		return 0
+	}
+}
+
 func (q Question) ParseMarkdown(input string) template.HTML {
 	p := parser.NewWithExtensions(parser.CommonExtensions | parser.FencedCode)
 	return template.HTML(markdown.ToHTML([]byte(input), p, nil))
