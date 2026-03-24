@@ -1,19 +1,19 @@
 {{ define "navbar" }}
 <nav class="navbar">
   <a href="/">
-    <button class="nav-item">
+    <button class="button-style">
       Home
     </button>
   </a>
   {{ if .Team }}
   <a href="/questions">
-    <button class="nav-item">
+    <button class="button-style">
       Questions
     </button>
   </a>
   {{ else }}
   <a href="/create-team">
-    <button class="nav-item">
+    <button class="button-style">
       Create Team
     </button>
   </a>
