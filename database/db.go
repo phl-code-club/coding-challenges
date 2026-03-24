@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	_ "modernc.org/sqlite"
 )
@@ -48,7 +49,11 @@ func createTables(db *sql.DB) error {
 }
 
 func GetDB() (*sql.DB, error) {
-	db, err := sql.Open("sqlite", "file:test.db")
+	path := os.Getenv("DB_FILE")
+	if path == "" {
+		path = "file:test.db"
+	}
+	db, err := sql.Open("sqlite", path)
 	if err != nil {
 		return nil, fmt.Errorf("unable to open db: %e", err)
 	}
