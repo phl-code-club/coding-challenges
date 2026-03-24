@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"enchanted-codex/cmd/seed/questions"
 	"enchanted-codex/database"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 )
 
@@ -17,7 +19,7 @@ func main() {
 	}
 
 	err := os.Remove("./test.db")
-	if err != nil {
+	if err != nil && !errors.Is(err, fs.ErrNotExist) {
 		panic(err)
 	}
 	db, err := database.GetDB()
